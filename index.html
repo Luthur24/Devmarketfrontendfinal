@@ -3678,13 +3678,9 @@
 <script>
   // ─────────────────────────────────────────────
   // CONFIG
-  // ─────────────────────────────────────────────    
-  // AUTO-DETECT: uses same origin if served by Flask, or localhost:5000 if opened as file
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? `${window.location.protocol}//${window.location.hostname}:5000`
-    : window.location.origin.includes('file://')
-      ? 'http://localhost:5000'
-      : window.location.origin;
+  // ─────────────────────────────────────────────
+  // Backend hosted on Render (free tier — keep-alive ping runs every 7 minutes)
+  const API = 'https://devmarketbackendfinal.onrender.com';
 
   // ─────────────────────────────────────────────
   // STATE
@@ -3723,6 +3719,14 @@
     }
     loadLandingData();
     initMarquee();
+    // Keep Render free-tier backend alive — ping every 7 minutes
+    startKeepAlivePing();
+  }
+
+  function startKeepAlivePing() {
+    const ping = () => fetch(`${API}/api/health`, { method: 'GET' }).catch(() => {});
+    ping(); // immediate ping on load
+    setInterval(ping, 7 * 60 * 1000); // then every 7 minutes
   }
 
   // ─────────────────────────────────────────────
@@ -3746,7 +3750,7 @@
       return data;
     } catch (e) {
       if (e.name === 'TypeError' && e.message.includes('fetch')) {
-        throw new Error('Cannot connect to server. Make sure the Flask server is running on port 5000.');
+        throw new Error('Cannot connect to server. The backend may be starting up — please wait a moment and try again.');
       }
       throw e;
     }
@@ -3993,7 +3997,7 @@
       }
       container.innerHTML = data.trending.slice(0, 4).map(p => renderProductCard(p)).join('');
     } catch (e) {
-      document.getElementById('trending-products').innerHTML = renderDemoProducts();
+      document.getElementById('trending-products').innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><div class="empty-state-title">Could not load products</div><div class="empty-state-desc">Check your connection or try again shortly.</div></div>';
     }
   }
 
@@ -4003,13 +4007,13 @@
       const container = document.getElementById('featured-products');
       if (!container) return;
       if (!data.featured.length) {
-        container.innerHTML = renderDemoProducts(3);
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><div class="empty-state-title">No featured products yet</div><div class="empty-state-desc">Be the first to list a product!</div></div>';
         return;
       }
       container.innerHTML = data.featured.slice(0, 3).map(p => renderProductCard(p)).join('');
     } catch (e) {
       const container = document.getElementById('featured-products');
-      if (container) container.innerHTML = renderDemoProducts(3);
+      if (container) container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><div class="empty-state-title">Could not load featured products</div><div class="empty-state-desc">Check your connection or try again shortly.</div></div>';
     }
   }
 
@@ -4198,7 +4202,7 @@
       container.innerHTML = data.products.map(p => renderProductCard(p)).join('');
       renderPagination(data.page, data.pages);
     } catch (e) {
-      container.innerHTML = renderDemoProducts(6);
+      container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-state-icon">⚠️</div><div class="empty-state-title">Could not load products</div><div class="empty-state-desc">Unable to reach server. Please try again shortly.</div></div>`;
     }
   }
 
