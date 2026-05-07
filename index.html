@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
   <title>Devmarket — The Developer Marketplace</title>
   <meta name="description" content="Buy and sell developer tools, APIs, templates, scripts, plugins, AI models and more. The world's premier marketplace for developers." />
+  <meta name="keywords" content="developer marketplace, buy APIs, sell scripts, developer tools, code templates, plugins, AI models" />
+  <meta name="author" content="Devmarket" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://developermarketplace.vercel.app" />
+
+  <!-- Open Graph (WhatsApp, Discord, Facebook previews) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devmarket" />
+  <meta property="og:title" content="Devmarket — The Developer Marketplace" />
+  <meta property="og:description" content="Buy and sell developer tools, APIs, templates, scripts, plugins, AI models and more." />
+  <meta property="og:url" content="https://developermarketplace.vercel.app" />
+  <meta property="og:image" content="https://developermarketplace.vercel.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Devmarket — The Developer Marketplace" />
+  <meta name="twitter:description" content="Buy and sell developer tools, APIs, templates, scripts, plugins, AI models and more." />
+  <meta name="twitter:image" content="https://developermarketplace.vercel.app/og-image.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#7c3aed" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,6 +45,7 @@
 
   <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 
   <style>
     /* ═══════════════════════════════════════════
@@ -2425,9 +2455,11 @@
     🤖
   </div>
 </div>
-
+<style>
+  .navbar{overflow-x: scroll;}
+</style>
 <!-- NAVBAR -->
-<nav id="navbar">
+<nav id="navbar" class="navbar">
   <div class="nav-logo" onclick="showPage('landing')">
     <div class="nav-logo-icon">⚡</div>
     <span><span class="grad">Dev</span>market</span>
