@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    Base template for Developer Marketplace
+    Theme: Black and White
+    Includes: Header, Footer, CSS/JS resources
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Developer Marketplace{% endblock %}</title>
+
+    <!-- CSS Includes -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modals.css' %}">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Developer Marketplace - Connect with skilled developers for your projects">
+    <meta name="keywords" content="developers, marketplace, programming, freelance, coding">
+    <meta name="author" content="Developer Marketplace Team">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{% url 'home' %}">
+    <meta property="og:title" content="Developer Marketplace">
+    <meta property="og:description" content="Connect with skilled developers for your projects">
+    <meta property="og:image" content="{% static 'images/og-image.png' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{% url 'home' %}">
+    <meta property="twitter:title" content="Developer Marketplace">
+    <meta property="twitter:description" content="Connect with skilled developers for your projects">
+    <meta property="twitter:image" content="{% static 'images/twitter-image.png' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bw-theme">
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="{% url 'home' %}" class="logo-link">
+                    <img src="{% static 'images/logo.svg' %}" alt="Developer Marketplace Logo" class="logo">
+                    <span class="logo-text">DevMarket</span>
+                </a>
+            </div>
+
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{% url 'listings' %}" class="nav-link">Listings</a></li>
+                    <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                {% if user.is_authenticated %}
+                    <div class="user-menu">
+                        <button class="user-button" id="userMenuButton">
+                            <i class="fas fa-user"></i>
+                            <span class="user-name">{{ user.username }}</span>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
+                            <a href="{% url 'dashboard' %}" class="dropdown-item">Dashboard</a>
+                            <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="auth-buttons">
+                        <a href="{% url 'login' %}" class="auth-button">Login</a>
+                        <a href="{% url 'register' %}" class="auth-button">Register</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuButton">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-navigation" id="mobileNavigation">
+        <ul class="mobile-nav-list">
+            <li class="mobile-nav-item"><a href="{% url 'home' %}" class="mobile-nav-link">Home</a></li>
+            <li class="mobile-nav-item"><a href="{% url 'listings' %}" class="mobile-nav-link">Listings</a></li>
+            <li class="mobile-nav-item"><a href="{% url 'about' %}" class="mobile-nav-link">About</a></li>
+            <li class="mobile-nav-item"><a href="{% url 'contact' %}" class="mobile-nav-link">Contact</a></li>
+            {% if user.is_authenticated %}
+                <li class="mobile-nav-item"><a href="{% url 'profile' %}" class="mobile-nav-link">Profile</a></li>
+                <li class="mobile-nav-item"><a href="{% url 'dashboard' %}" class="mobile-nav-link">Dashboard</a></li>
+                <li class="mobile-nav-item"><a href="{% url 'logout' %}" class="mobile-nav-link">Logout</a></li>
+            {% else %}
+                <li class="mobile-nav-item"><a href="{% url 'login' %}" class="mobile-nav-link">Login</a></li>
+                <li class="mobile-nav-item"><a href="{% url 'register' %}" class="mobile-nav-link">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h3 class="footer-title">About Us</h3>
+                <p class="footer-text">Developer Marketplace connects skilled developers with clients seeking programming services.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section links">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-list">
+                    <li class="footer-item"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                    <li class="footer-item"><a href="{% url 'listings' %}" class="footer-link">Listings</a></li>
+                    <li class="footer-item"><a href="{% url 'about' %}" class="footer-link">About</a></li>
+                    <li class="footer-item"><a href="{% url 'contact' %}" class="footer-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section contact">
+                <h3 class="footer-title">Contact Us</h3>
+                <ul class="footer-list">
+                    <li class="footer-item"><i class="fas fa-map-marker-alt"></i> 123 Developer St, Tech City, TC 12345</li>
+                    <li class="footer-item"><i class="fas fa-phone"></i> (123) 456-7890</li>
+                    <li class="footer-item"><i class="fas fa-envelope"></i> info@devmarket.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; {% now "Y" %} Developer Marketplace. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="{% url 'privacy' %}" class="footer-link">Privacy Policy</a>
+                <a href="{% url 'terms' %}" class="footer-link">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Includes -->
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/header.js' %}"></script>
+    <script src="{% static 'js/footer.js' %}"></script>
+    <script src="{% static 'js/navigation.js' %}"></script>
+    <script src="{% static 'js/forms.js' %}"></script>
+    <script src="{% static 'js/cards.js' %}"></script>
+    <script src="{% static 'js/modals.js' %}"></script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
