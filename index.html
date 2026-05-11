@@ -672,7 +672,7 @@
 
     .user-dropdown {
       position: absolute;
-      top: calc(100% + 8px);
+      top: 10vh;
       right: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-light);
@@ -2564,14 +2564,6 @@
         <span id="nav-username" style="font-size:14px;font-weight:600;">User</span>
         <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-muted);"></i>
       </div>
-      <div class="user-dropdown hidden" id="user-dropdown">
-        <div class="dropdown-item" onclick="showPage('dashboard')"><i class="fas fa-chart-bar"></i> Dashboard</div>
-        <div class="dropdown-item" onclick="showPage('messages')"><i class="fas fa-comment"></i> Messages</div>
-        <div class="dropdown-item" onclick="showPage('bookmarks')"><i class="fas fa-bookmark"></i> Bookmarks</div>
-        <div class="dropdown-item" onclick="showPage('profile-me')"><i class="fas fa-user"></i> My Profile</div>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-item" onclick="logout()" style="color:#f87171;"><i class="fas fa-sign-out-alt"></i> Logout</div>
-      </div>
     </div>
   </div>
 </nav>
@@ -2580,6 +2572,14 @@
      APP CONTAINER
 ═══════════════════════════════════════════ -->
 <div id="app" style="display">
+      <div class="user-dropdown hidden" id="user-dropdown">
+        <div class="dropdown-item" onclick="showPage('dashboard')"><i class="fas fa-chart-bar"></i> Dashboard</div>
+        <div class="dropdown-item" onclick="showPage('messages')"><i class="fas fa-comment"></i> Messages</div>
+        <div class="dropdown-item" onclick="showPage('bookmarks')"><i class="fas fa-bookmark"></i> Bookmarks</div>
+        <div class="dropdown-item" onclick="showPage('profile-me')"><i class="fas fa-user"></i> My Profile</div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item" onclick="logout()" style="color:#f87171;"><i class="fas fa-sign-out-alt"></i> Logout</div>
+      </div>
 
   <!-- ═══════════ LANDING PAGE ═══════════ -->
   <div id="page-landing" class="page active">
@@ -3056,9 +3056,10 @@
   <div id="page-product-detail" class="page">
     <div class="container">
       <div style="padding:20px 0;">
-        <button class="btn btn-ghost btn-sm" onclick="history.back()">
-          <i class="fas fa-arrow-left"></i> Back
-        </button>
+<button class="btn btn-ghost btn-sm" onclick="returnToPrevious()">
+  <i class="fas fa-arrow-left"></i> Back
+</button>
+        
       </div>
       <div class="product-detail-layout" id="product-detail-content">
         <!-- Skeleton -->
@@ -5573,6 +5574,21 @@
   console.log('%c The World\'s #1 Developer Marketplace ', 'color:#a78bfa;font-size:14px;');
   console.log('%c Powered by Mistral AI + Tavily Search ', 'color:#06b6d4;font-size:12px;');
 // Mobile hint handled gracefully below
+// Track where user came from for smart back navigation
+let previousPage = 'marketplace';
+
+const _originalShowPage = showPage;
+showPage = function(page) {
+  if (state.currentPage && state.currentPage !== page) {
+    previousPage = state.currentPage;
+  }
+  _originalShowPage(page);
+};
+
+function returnToPrevious() {
+  showPage(previousPage);
+}
+
 </script>
 
 </body>
