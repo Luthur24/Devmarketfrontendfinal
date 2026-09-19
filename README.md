@@ -87,7 +87,6 @@ Technology
 
 The repository contains HTML templates, CSS, application model/view files, and generated frontend assets.
 
-Live Demo
 
 Live Application:
 https://devmarketfrontendfinal.vercel.app/
